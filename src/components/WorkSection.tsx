@@ -91,9 +91,9 @@ const WorkSection = () => {
           </div>
 
           {/* Note */}
-          <p className="text-center text-muted-foreground mt-8 text-sm">
+          {/* <p className="text-center text-muted-foreground mt-8 text-sm">
             Upload your campaign images and videos to showcase your best work here.
-          </p>
+          </p> */}
         </div>
       </div>
 
