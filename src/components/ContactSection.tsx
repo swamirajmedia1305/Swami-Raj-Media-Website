@@ -111,7 +111,7 @@ const ContactSection = () => {
               </div>
 
               {/* Quick Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="hidden sm:flex sm:flex-row sm:gap-4">
                 <Button variant="whatsapp" size="lg" className="flex-1" asChild>
                   <a
                     href="https://wa.me/918055981010"
