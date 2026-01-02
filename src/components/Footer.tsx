@@ -1,21 +1,23 @@
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Facebook, href: "#", label: t("footer.social.facebook") },
+    { icon: Instagram, href: "#", label: t("footer.social.instagram") },
+    { icon: Youtube, href: "#", label: t("footer.social.youtube") },
+    { icon: Twitter, href: "#", label: t("footer.social.twitter") },
   ];
 
   const quickLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#services", label: "Services" },
-    { href: "#work", label: "Work" },
-    { href: "#contact", label: "Contact" },
+    { href: "#home", label: t("footer.home") },
+    { href: "#about", label: t("footer.about") },
+    { href: "#services", label: t("footer.services") },
+    { href: "#work", label: t("footer.work") },
+    { href: "#contact", label: t("footer.contact") },
   ];
 
   const handleNavClick = (href: string) => {
@@ -39,9 +41,7 @@ const Footer = () => {
               <span className="font-bold text-xl">Swamiraj Media</span>
             </div>
             <p className="text-primary-foreground/70 mb-6 max-w-md">
-              Your Voice. Our Strategy. Winning Impact. We are a modern, 
-              result-oriented media agency specializing in political campaigns, 
-              social media marketing, and business development.
+              {t("footer.brand.tagline")} {t("footer.description")}
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -59,7 +59,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-lg mb-6">Quick Links</h3>
+            <h3 className="font-semibold text-lg mb-6">{t("footer.quickLinks")}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -80,12 +80,12 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-semibold text-lg mb-6">Contact Info</h3>
+            <h3 className="font-semibold text-lg mb-6">{t("footer.contactInfo")}</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                 <span className="text-primary-foreground/70">
-                  Kolhapur, Maharashtra
+                  {t("contact.info.address.value")}
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -114,10 +114,10 @@ const Footer = () => {
         <div className="border-t border-primary-foreground/10 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/60 text-sm text-center md:text-left">
-              © {currentYear} Swamiraj Media. All rights reserved.
+              © {currentYear} Swamiraj Media. {t("footer.rights")}
             </p>
             <p className="text-primary-foreground/60 text-sm">
-              Crafted with ❤️ in Kolhapur
+              Developed by 
             </p>
           </div>
         </div>

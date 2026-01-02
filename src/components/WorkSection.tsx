@@ -1,25 +1,76 @@
 import { useState } from "react";
-import { X, Play } from "lucide-react";
+import { X } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
 
-const workItems = [
-  { type: "image", category: "Political", title: "Election Campaign Poster" },
-  { type: "image", category: "Social Media", title: "Instagram Marketing" },
-  { type: "image", category: "Business", title: "Brand Identity Design" },
-  { type: "image", category: "Political", title: "Rally Event Coverage" },
-  { type: "image", category: "Social Media", title: "Facebook Ad Campaign" },
-  { type: "image", category: "Business", title: "Product Launch Graphics" },
-];
+const categories = ["Political", "Social Media", "Business"] as const;
+const filters = ["All", ...categories] as const;
+
+const imageModules = import.meta.glob<string>("../assets/*.jpeg", {
+  eager: true,
+  import: "default",
+});
+
+type WorkItem = {
+  src: string;
+  categories: (typeof categories)[number][];
+  title: string;
+  order: number;
+};
+
+const manualCategoryMap: Record<number, (typeof categories)[number][]> = {
+  1: ["Business", "Social Media"],
+  2: ["Political"],
+  3: ["Political"],
+  4: ["Political"],
+  5: ["Political"],
+  6: ["Political"],
+  7: ["Political"],
+  8: ["Political"],
+  9: ["Political"],
+  10: ["Political"],
+  11: ["Political"],
+  12: ["Political"],
+  13: ["Social Media"],
+  14: ["Political"],
+  15: ["Social Media", "Business"],
+  16: ["Political"],
+  17: ["Political"],
+  18: ["Political"],
+  19: ["Political"],
+  20: ["Political"],
+  21: ["Political"],
+};
+
+const workItems: WorkItem[] = Object.entries(imageModules)
+  .map(([path, src], index) => {
+    const match = path.match(/\/(\d+)\.jpeg$/);
+    const order = match ? Number(match[1]) : index + 1;
+    const title = match ? order.toString() : (index + 1).toString();
+    const mappedCategories = manualCategoryMap[order];
+
+    return {
+      src,
+      categories: mappedCategories ?? ["Political"],
+      title,
+      order,
+    };
+  })
+  .sort((a, b) => a.order - b.order);
 
 const WorkSection = () => {
+  const { t } = useLanguage();
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
-  const [activeFilter, setActiveFilter] = useState("All");
-
-  const filters = ["All", "Political", "Social Media", "Business"];
+  const [activeFilter, setActiveFilter] = useState<(typeof filters)[number]>(
+    "All",
+  );
+  const [showAll, setShowAll] = useState(false);
 
   const filteredItems =
     activeFilter === "All"
       ? workItems
-      : workItems.filter((item) => item.category === activeFilter);
+      : workItems.filter((item) => item.categories.includes(activeFilter));
+
+  const visibleItems = showAll ? filteredItems : filteredItems.slice(0, 6);
 
   return (
     <section id="work" className="py-20 md:py-28 bg-muted/50">
@@ -28,13 +79,13 @@ const WorkSection = () => {
           {/* Section Header */}
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent rounded-full text-sm font-medium mb-4">
-              Our Work
+              {t('work.badge')}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Featured Projects
+              {t('work.title')}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Take a look at some of our successful campaigns, creatives, and projects.
+              {t('work.description')}
             </p>
           </div>
 
@@ -50,45 +101,54 @@ const WorkSection = () => {
                     : "bg-card text-foreground hover:bg-primary/10 border border-border"
                 }`}
               >
-                {filter}
+                {t(`category.${filter.toLowerCase().replace(' ', '')}`)}
               </button>
             ))}
           </div>
 
           {/* Gallery Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {filteredItems.map((item, index) => (
+            {visibleItems.map((item, index) => (
               <div
                 key={index}
                 className="group relative aspect-square bg-card rounded-xl overflow-hidden cursor-pointer shadow-card hover:shadow-lg transition-all duration-300"
                 onClick={() => setSelectedWork(index)}
               >
-                {/* Placeholder - Replace with actual images */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                  <div className="text-center p-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-3">
-                      {item.type === "video" ? (
-                        <Play className="w-6 h-6 text-primary" />
-                      ) : (
-                        <span className="text-2xl">📸</span>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{item.title}</p>
-                  </div>
-                </div>
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
 
-                {/* Overlay on Hover */}
-                <div className="absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="text-center text-primary-foreground">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-multiply" />
+
+                <div className="absolute inset-0 flex items-end justify-between p-4 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div>
                     <span className="block text-xs uppercase tracking-wider mb-1 text-accent">
-                      {item.category}
+                      {item.categories.map((c) => t(`category.${c.toLowerCase().replace(" ", "")}`)).join(" • ")}
                     </span>
-                    <span className="font-semibold">{item.title}</span>
+                    <span className="font-semibold">{t("work.project")} {item.title}</span>
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/70 text-primary-foreground">
+                    <span className="text-lg">↗</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {!showAll && filteredItems.length > visibleItems.length && (
+            <div className="flex justify-center mt-8">
+              <button
+                onClick={() => setShowAll(true)}
+                className="px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                {t('work.viewAll')}
+              </button>
+            </div>
+          )}
 
           {/* Note */}
           {/* <p className="text-center text-muted-foreground mt-8 text-sm">
@@ -98,7 +158,7 @@ const WorkSection = () => {
       </div>
 
       {/* Lightbox */}
-      {selectedWork !== null && (
+      {selectedWork !== null && filteredItems[selectedWork] && (
         <div
           className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
           onClick={() => setSelectedWork(null)}
@@ -109,10 +169,35 @@ const WorkSection = () => {
           >
             <X className="w-6 h-6" />
           </button>
-          <div className="max-w-4xl w-full aspect-video bg-card rounded-xl flex items-center justify-center">
-            <p className="text-muted-foreground">
-              {filteredItems[selectedWork]?.title}
-            </p>
+          <div
+            className="max-w-5xl w-full overflow-hidden rounded-xl bg-card shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="relative aspect-video bg-black">
+              <img
+                src={filteredItems[selectedWork].src}
+                alt={filteredItems[selectedWork].title}
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="flex items-center justify-between px-5 py-4 border-t border-border">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-accent mb-1">
+                  {filteredItems[selectedWork].categories
+                    .map((c) => t(`category.${c.toLowerCase().replace(" ", "")}`))
+                    .join(" • ")}
+                </p>
+                <p className="text-foreground font-semibold">
+                  {t("work.project")} {filteredItems[selectedWork].title}
+                </p>
+              </div>
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                onClick={() => setSelectedWork(null)}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       )}

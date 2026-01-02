@@ -1,6 +1,9 @@
 import { Target, Award, Users } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const AboutSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="about" className="py-20 md:py-28 bg-muted/50">
       <div className="container px-4">
@@ -8,14 +11,13 @@ const AboutSection = () => {
           {/* Section Header */}
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent rounded-full text-sm font-medium mb-4">
-              About Us
+              {t("about.badge")}
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              Who We Are
+              {t("about.title")}
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Swamiraj Media is a modern, result-oriented media agency combining 
-              strategy, creativity, and technology to deliver winning outcomes.
+              {t("about.subtitle")}
             </p>
           </div>
 
@@ -24,24 +26,16 @@ const AboutSection = () => {
             {/* Left - Text Content */}
             <div className="space-y-6">
               <p className="text-foreground/80 text-lg leading-relaxed">
-                At <strong className="text-primary">Swamiraj Media</strong>, we specialize in 
-                political campaigning, social media marketing, and business development. 
-                Our team understands the pulse of the audience and crafts strategies that 
-                resonate with them.
+                {t("about.p1")}
               </p>
               <p className="text-foreground/80 text-lg leading-relaxed">
-                With years of experience in both political and business fields, we combine 
-                ground campaign support with cutting-edge digital strategies to ensure your 
-                message reaches the right people at the right time.
+                {t("about.p2")}
               </p>
 
               {/* Mission Statement */}
               <div className="bg-primary/5 border-l-4 border-accent p-6 rounded-r-lg">
-                <h3 className="text-lg font-semibold text-primary mb-2">Our Mission</h3>
-                <p className="text-foreground/80 italic">
-                  "To deliver your message to the right audience, at the right time, 
-                  in the most effective way."
-                </p>
+                <h3 className="text-lg font-semibold text-primary mb-2">{t("about.mission.title")}</h3>
+                <p className="text-foreground/80 italic">"{t("about.mission.quote")}"</p>
               </div>
             </div>
 
@@ -53,10 +47,10 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">
-                    Strategic Approach
+                    {t("about.feature1.title")}
                   </h3>
                   <p className="text-muted-foreground">
-                    Data-driven strategies tailored to your specific goals and target audience.
+                    {t("about.feature1.desc")}
                   </p>
                 </div>
               </div>
@@ -67,10 +61,10 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">
-                    Proven Results
+                    {t("about.feature2.title")}
                   </h3>
                   <p className="text-muted-foreground">
-                    Track record of successful campaigns across political and business sectors.
+                    {t("about.feature2.desc")}
                   </p>
                 </div>
               </div>
@@ -81,10 +75,10 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground text-lg mb-2">
-                    Expert Team
+                    {t("about.feature3.title")}
                   </h3>
                   <p className="text-muted-foreground">
-                    Experienced professionals in campaigning, content creation, and digital marketing.
+                    {t("about.feature3.desc")}
                   </p>
                 </div>
               </div>

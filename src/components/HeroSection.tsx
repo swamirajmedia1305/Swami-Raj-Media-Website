@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   const handleNavClick = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -31,25 +34,23 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse-soft" />
             <span className="text-primary-foreground/90 text-sm font-medium">
-              Political Campaigning | Social Media Marketing | Business Development
+              {t("hero.badge")}
             </span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Swamiraj Media
+            {t("hero.brand")}
           </h1>
 
           {/* Tagline */}
           <p className="text-xl md:text-2xl lg:text-3xl text-accent font-semibold mb-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Your Voice. Our Strategy. Winning Impact.
+            {t("hero.tagline")}
           </p>
 
           {/* Description */}
           <p className="text-base md:text-lg text-primary-foreground/80 max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            A modern & result-oriented media agency specializing in political campaigns, 
-            digital marketing, and business development. We deliver your message to the 
-            right audience at the right time.
+            {t("hero.description")}
           </p>
 
           {/* CTA Buttons */}
@@ -59,7 +60,7 @@ const HeroSection = () => {
               size="xl"
               onClick={() => handleNavClick("#contact")}
             >
-              Get Started
+              {t("hero.cta.primary")}
             </Button>
             <Button
               variant="heroOutline"
@@ -67,7 +68,7 @@ const HeroSection = () => {
               onClick={() => handleNavClick("#contact")}
             >
               <Phone className="w-5 h-5" />
-              Contact Us
+              {t("hero.cta.contact")}
             </Button>
           </div>
 
@@ -75,15 +76,15 @@ const HeroSection = () => {
           <div className="grid grid-cols-3 gap-4 md:gap-8 mt-16 pt-8 border-t border-primary-foreground/20 animate-fade-in" style={{ animationDelay: "0.5s" }}>
             <div className="text-center">
               <div className="text-2xl md:text-4xl font-bold text-accent">50+</div>
-              <div className="text-xs md:text-sm text-primary-foreground/70">Campaigns</div>
+              <div className="text-xs md:text-sm text-primary-foreground/70">{t("hero.stats.campaigns")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl md:text-4xl font-bold text-accent">100+</div>
-              <div className="text-xs md:text-sm text-primary-foreground/70">Clients</div>
+              <div className="text-xs md:text-sm text-primary-foreground/70">{t("hero.stats.clients")}</div>
             </div>
             <div className="text-center">
               <div className="text-2xl md:text-4xl font-bold text-accent">5+</div>
-              <div className="text-xs md:text-sm text-primary-foreground/70">Years Experience</div>
+              <div className="text-xs md:text-sm text-primary-foreground/70">{t("hero.stats.years")}</div>
             </div>
           </div>
         </div>
