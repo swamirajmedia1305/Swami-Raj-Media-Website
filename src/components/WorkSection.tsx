@@ -5,11 +5,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 const categories = ["Political", "Social Media", "Business"] as const;
 const filters = ["All", ...categories] as const;
 
-const imageModules = import.meta.glob<string>("../assets/*.jpeg", {
-  eager: true,
-  import: "default",
-});
-
 type WorkItem = {
   src: string;
   categories: (typeof categories)[number][];
@@ -41,21 +36,16 @@ const manualCategoryMap: Record<number, (typeof categories)[number][]> = {
   21: ["Political"],
 };
 
-const workItems: WorkItem[] = Object.entries(imageModules)
-  .map(([path, src], index) => {
-    const match = path.match(/\/(\d+)\.jpeg$/);
-    const order = match ? Number(match[1]) : index + 1;
-    const title = match ? order.toString() : (index + 1).toString();
-    const mappedCategories = manualCategoryMap[order];
-
-    return {
-      src,
-      categories: mappedCategories ?? ["Political"],
-      title,
-      order,
-    };
-  })
-  .sort((a, b) => a.order - b.order);
+// Direct references to images in public folder
+const workItems: WorkItem[] = Array.from({ length: 21 }, (_, i) => {
+  const order = i + 1;
+  return {
+    src: `/images/${order}.jpeg`,
+    categories: manualCategoryMap[order] ?? ["Political"],
+    title: order.toString(),
+    order,
+  };
+}).sort((a, b) => a.order - b.order);
 
 const WorkSection = () => {
   const { t } = useLanguage();

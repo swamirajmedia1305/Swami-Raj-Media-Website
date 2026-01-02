@@ -5,11 +5,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 const categories = ["Political", "Social Media", "Business"] as const;
 const filters = ["All", ...categories] as const;
 
-const videoModules = import.meta.glob<string>("../assets/reels/*.mp4", {
-  eager: true,
-  import: "default",
-});
-
 type ReelItem = {
   src: string;
   categories: (typeof categories)[number][];
@@ -24,23 +19,55 @@ const manualCategoryMap: Record<number, (typeof categories)[number][]> = {
   2: ["Political"],
   3: ["Political"],
   4: ["Political"],
+  5: ["Political"],
+  6: ["Political"],
 };
 
-const reelItems: ReelItem[] = Object.entries(videoModules)
-  .map(([path, src], index) => {
-    const match = path.match(/\/v?(\d+)\.mp4$/);
-    const order = match ? Number(match[1]) : index;
-    const title = match ? order.toString() : index.toString();
-    const mappedCategories = manualCategoryMap[order];
-
-    return {
-      src,
-      categories: mappedCategories ?? ["Political"],
-      title,
-      order,
-    };
-  })
-  .sort((a, b) => a.order - b.order);
+// Direct references to videos in public folder
+const reelItems: ReelItem[] = [
+  {
+    src: "/reels/v0.mp4",
+    categories: manualCategoryMap[0] ?? ["Political"],
+    title: "0",
+    order: 0,
+  },
+  {
+    src: "/reels/v1.mp4",
+    categories: manualCategoryMap[1] ?? ["Political"],
+    title: "1",
+    order: 1,
+  },
+  {
+    src: "/reels/v2.mp4",
+    categories: manualCategoryMap[2] ?? ["Political"],
+    title: "2",
+    order: 2,
+  },
+  {
+    src: "/reels/v3.mp4",
+    categories: manualCategoryMap[3] ?? ["Political"],
+    title: "3",
+    order: 3,
+  },
+  {
+    src: "/reels/v4.mp4",
+    categories: manualCategoryMap[4] ?? ["Political"],
+    title: "4",
+    order: 4,
+  },
+  {
+    src: "/reels/v5.mp4",
+    categories: manualCategoryMap[5] ?? ["Political"],
+    title: "5",
+    order: 5,
+  },
+  {
+    src: "/reels/v6.mp4",
+    categories: manualCategoryMap[6] ?? ["Political"],
+    title: "6",
+    order: 6,
+  },
+].sort((a, b) => a.order - b.order);
 
 const ReelSection = () => {
   const { t } = useLanguage();
