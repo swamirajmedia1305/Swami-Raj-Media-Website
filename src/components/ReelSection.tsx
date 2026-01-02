@@ -49,12 +49,7 @@ const reelItems: ReelItem[] = [
     title: "3",
     order: 3,
   },
-  {
-    src: "/reels/v4.mp4",
-    categories: manualCategoryMap[4] ?? ["Political"],
-    title: "4",
-    order: 4,
-  },
+ 
   {
     src: "/reels/v5.mp4",
     categories: manualCategoryMap[5] ?? ["Political"],
