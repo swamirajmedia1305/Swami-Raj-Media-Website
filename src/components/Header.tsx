@@ -145,9 +145,8 @@ const Header = () => {
                 {t(link.key)}
               </a>
             ))}
-            <div className="flex flex-col gap-3 pt-4 border-t border-border">
-              <LanguageToggle />
-              <Button variant="whatsapp" size="sm" className="flex-1" asChild>
+            <div className="flex flex-col items-center gap-3 pt-4 border-t border-border">
+              <Button variant="whatsapp" size="sm" className="h-12 w-40" asChild>
                 <a
                   href="https://wa.me/918055981010"
                   target="_blank"
@@ -156,7 +155,7 @@ const Header = () => {
                   {t("contact.action.whatsapp")}
                 </a>
               </Button>
-              <Button variant="call" size="sm" className="flex-1" asChild>
+              <Button variant="call" size="sm" className="h-12 w-40" asChild>
                 <a href="tel:+918055981010">{t("contact.action.call")}</a>
               </Button>
             </div>
