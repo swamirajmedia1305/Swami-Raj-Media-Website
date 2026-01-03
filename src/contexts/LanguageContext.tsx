@@ -174,10 +174,10 @@ export const translations: Translations = {
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('mr');
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'en' ? 'mr' : 'en'));
+    setLanguage((prev) => (prev === 'en' ? 'mr' : 'en')); //'mr'?'en':'mr'   
   };
 
   const t = (key: string): string => {
