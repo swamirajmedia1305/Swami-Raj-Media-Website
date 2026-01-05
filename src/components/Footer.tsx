@@ -6,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/share/1a4jDPwoT2/", label: t("footer.social.facebook") },
+    { icon: Facebook, href: "https://www.facebook.com/share/1a4jDPwoT2/" ,label: t("footer.social.facebook") },
     { icon: Instagram, href: "https://www.instagram.com/swamiraj1305?igsh=MTc3czRkaXF3cHdmcA==", label: t("footer.social.instagram") },
     //{ icon: Youtube, href: "#", label: t("footer.social.youtube") },
     //{ icon: Twitter, href: "#", label: t("footer.social.twitter") },
@@ -50,6 +50,8 @@ const Footer = () => {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent transition-colors duration-300"
                   aria-label={social.label}
                 >
