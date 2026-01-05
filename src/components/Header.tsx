@@ -52,15 +52,17 @@ const Header = () => {
           }}
           className="flex items-center gap-2"
         >
-          <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
-            <span className="text-accent-foreground font-bold text-xl">S</span>
-          </div>
+          <img 
+            src="/logo1.png" 
+            alt="Swamiraj Media Logo" 
+            className="w-20 h-20 rounded-lg object-contain"
+          />
           <span
-            className={`font-bold text-xl transition-colors duration-300 ${
+            className={`font-bold text-xl transition-colors duration-300 hideInline ${
               isScrolled ? "text-primary" : "text-primary-foreground"
             }`}
           >
-            Swamiraj Media
+            SwamiRaj Media
           </span>
         </a>
 
@@ -74,7 +76,7 @@ const Header = () => {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className={`font-medium transition-colors duration-300 hover:text-accent ${
+              className={`font-medium transition-colors duration-300 hover:text-accent hideInline  ${
                 isScrolled ? "text-foreground" : "text-primary-foreground"
               }`}
             >

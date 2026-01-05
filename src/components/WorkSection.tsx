@@ -20,7 +20,7 @@ const manualCategoryMap: Record<number, (typeof categories)[number][]> = {
   5: ["Political"],
   6: ["Political"],
   7: ["Political"],
-  8: ["Political"],
+  8: ["Social Media", "Business"],
   9: ["Political"],
   10: ["Political"],
   11: ["Political"],

@@ -80,8 +80,9 @@ const ContactSection = () => {
                       href="tel:+918055981010"
                       className="text-muted-foreground hover:text-accent transition-colors"
                     >
-                      +91 8055981010
+                      +91 9371657373, 
                     </a>
+                    <a href="tel:+918055981010" className="text-muted-foreground hover:text-accent transition-colors">+91 8459217214</a>
                   </div>
                 </div>
 
@@ -95,7 +96,7 @@ const ContactSection = () => {
                       href="mailto:swamirajmedia@gmail.com"
                       className="text-muted-foreground hover:text-accent transition-colors"
                     >
-                      swamirajmedia@gmail.com
+                      swamirajmedia1305@gmail.com
                     </a>
                   </div>
                 </div>
