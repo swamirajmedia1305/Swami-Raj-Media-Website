@@ -6,10 +6,10 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: t("footer.social.facebook") },
-    { icon: Instagram, href: "#", label: t("footer.social.instagram") },
-    { icon: Youtube, href: "#", label: t("footer.social.youtube") },
-    { icon: Twitter, href: "#", label: t("footer.social.twitter") },
+    { icon: Facebook, href: "https://www.facebook.com/share/1a4jDPwoT2/", label: t("footer.social.facebook") },
+    { icon: Instagram, href: "https://www.instagram.com/swamiraj1305?igsh=MTc3czRkaXF3cHdmcA==", label: t("footer.social.instagram") },
+    //{ icon: Youtube, href: "#", label: t("footer.social.youtube") },
+    //{ icon: Twitter, href: "#", label: t("footer.social.twitter") },
   ];
 
   const quickLinks = [

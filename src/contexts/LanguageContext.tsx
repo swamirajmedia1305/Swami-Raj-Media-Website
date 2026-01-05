@@ -33,7 +33,7 @@ export const translations: Translations = {
     en: 'Political Campaigning | Social Media Marketing | Business Development',
     mr: 'राजकीय मोहिमा | सोशल मीडिया मार्केटिंग | व्यवसाय विकास',
   },
-  'hero.brand': { en: 'Swamiraj Media', mr: 'स्वामीराज मीडिया' },
+  'hero.brand': { en: 'SwamiRaj Media', mr: 'स्वामीराज मीडिया' },
   'hero.tagline': {
     en: 'Your Voice. Our Strategy. Winning Impact.',
     mr: 'तुमचा आवाज. आमची रणनीती. जिंकणारा परिणाम.',
