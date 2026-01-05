@@ -1,40 +1,89 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "../contexts/LanguageContext";
+import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init("pHaLFl60kgMSeph6Y"); // Replace with your EmailJS public key
+  }, []);
+
+  const showPopup = (type: string, title: string, message: string) => {
+    toast({
+      title: title,
+      description: message,
+      variant: type === "error" ? "destructive" : "default",
+    });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Collect form data using a more React-friendly approach
+    const form = e.target as HTMLFormElement;
+    const formDataObj = new FormData(form);
+    const params = {
+      fullName: formDataObj.get("fullName"),
+      email: formDataObj.get("email"),
+      phone: formDataObj.get("phone"),
+      message: formDataObj.get("message"),
+    };
 
-    toast({
-      title: t("contact.toast.title"),
-      description: t("contact.toast.desc"),
-    });
+    console.log("All form data:", params);
 
-    setFormData({ name: "", email: "", phone: "", message: "" });
-    setIsSubmitting(false);
+    // The service and template IDs are hardcoded here, as in your original code.
+    const serviceID = "service_irtvg2e";
+    const templateID = "template_odas3np";
+
+    // Call the EmailJS send function
+    emailjs
+      .send(serviceID, templateID, params)
+      .then(() => {
+        showPopup(
+          "success",
+          "Email Sent Successfully!",
+          "Thank you for your message! We'll get back to you soon."
+        );
+        form.reset(); // Reset the form after successful submission
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to send email:", error);
+        showPopup(
+          "error",
+          "Email Failed",
+          "Failed to send email. Please try again later or contact us directly."
+        );
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -154,20 +203,20 @@ const ContactSection = () => {
               <h3 className="text-2xl font-bold text-foreground mb-6">
                 {t("contact.form.title")}
               </h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleFormSubmit} className="space-y-5">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="fullName"
                     className="block text-sm font-medium text-foreground mb-2"
                   >
                     {t("contact.form.name")}
                   </label>
                   <Input
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                     type="text"
                     placeholder={t("contact.placeholder.name")}
-                    value={formData.name}
+                    value={formData.fullName}
                     onChange={handleChange}
                     required
                     className="h-12"
