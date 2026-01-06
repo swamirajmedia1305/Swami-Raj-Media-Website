@@ -187,10 +187,10 @@ const ReelSection = () => {
             <X className="w-6 h-6" />
           </button>
           <div
-            className="max-w-2xl w-full overflow-hidden rounded-xl bg-card shadow-2xl"
+            className="max-w-md md:max-w-lg lg:max-w-xl w-full overflow-hidden rounded-xl bg-card shadow-2xl max-h-[90vh] flex flex-col"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative aspect-[9/16] bg-black">
+            <div className="relative bg-black flex-1 min-h-0">
               <video
                 src={filteredItems[selectedReel].src}
                 className="h-full w-full object-contain"

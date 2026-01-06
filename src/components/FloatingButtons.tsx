@@ -8,7 +8,7 @@ const FloatingButtons = () => {
     <>
       {/* Floating WhatsApp Button (Desktop) */}
       <a
-        href="https://wa.me/918055981010"
+        href="https://wa.me/919371657373"
         target="_blank"
         rel="noopener noreferrer"
         className="hidden md:flex fixed bottom-6 right-6 z-40 w-14 h-14 bg-[#25D366] rounded-full items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
@@ -33,7 +33,7 @@ const FloatingButtons = () => {
         </button>
 
         <a
-          href="https://wa.me/918055981010"
+          href="https://wa.me/919371657373"
           target="_blank"
           rel="noopener noreferrer"
           className="w-12 h-12 bg-[#25D366] rounded-2xl flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
@@ -47,7 +47,7 @@ const FloatingButtons = () => {
 
       {/* Floating Call Button (Mobile Only) */}
       <a
-        href="tel:+918055981010"
+        href="tel:+919371657373"
         className="fixed bottom-6 left-6 z-40 w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 md:hidden"
         aria-label={t("floating.call")}
       >

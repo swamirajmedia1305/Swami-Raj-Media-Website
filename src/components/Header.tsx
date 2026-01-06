@@ -150,7 +150,7 @@ const Header = () => {
             <div className="flex flex-col items-center gap-3 pt-4 border-t border-border">
               <Button variant="whatsapp" size="sm" className="h-12 w-40" asChild>
                 <a
-                  href="https://wa.me/918055981010"
+                  href="https://wa.me/919371657373"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -158,7 +158,7 @@ const Header = () => {
                 </a>
               </Button>
               <Button variant="call" size="sm" className="h-12 w-40" asChild>
-                <a href="tel:+918055981010">{t("contact.action.call")}</a>
+                <a href="tel:+919371657373">{t("contact.action.call")}</a>
               </Button>
             </div>
           </nav>
