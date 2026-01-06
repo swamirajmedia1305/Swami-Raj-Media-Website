@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "../contexts/LanguageContext";
-import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -18,68 +17,59 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init("pHaLFl60kgMSeph6Y"); // Replace with your EmailJS public key
-  }, []);
-
-  const showPopup = (type: string, title: string, message: string) => {
-    toast({
-      title: title,
-      description: message,
-      variant: type === "error" ? "destructive" : "default",
-    });
-  };
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setIsSubmitting(true);
 
-    // Collect form data using a more React-friendly approach
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
-    const params = {
-      fullName: formDataObj.get("fullName"),
-      email: formDataObj.get("email"),
-      phone: formDataObj.get("phone"),
-      message: formDataObj.get("message"),
+    const payload = {
+      fullName: formDataObj.get("fullName") as string,
+      email: formDataObj.get("email") as string,
+      phone: formDataObj.get("phone") as string,
+      message: formDataObj.get("message") as string,
     };
 
-    console.log("All form data:", params);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    // The service and template IDs are hardcoded here, as in your original code.
-    const serviceID = "service_irtvg2e";
-    const templateID = "template_odas3np";
+      const data = await response.json();
 
-    // Call the EmailJS send function
-    emailjs
-      .send(serviceID, templateID, params)
-      .then(() => {
-        showPopup(
-          "success",
-          "Email Sent Successfully!",
-          "Thank you for your message! We'll get back to you soon."
-        );
-        form.reset(); // Reset the form after successful submission
+      if (response.ok) {
+        toast({
+          title: "Email Sent Successfully!",
+          description: "Thank you for your message! We'll get back to you soon.",
+        });
+        form.reset();
         setFormData({
           fullName: "",
           email: "",
           phone: "",
           message: "",
         });
-      })
-      .catch((error) => {
-        console.error("Failed to send email:", error);
-        showPopup(
-          "error",
-          "Email Failed",
-          "Failed to send email. Please try again later or contact us directly."
-        );
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+      } else {
+        toast({
+          title: "Email Failed",
+          description: data.error || "Failed to send email. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      toast({
+        title: "Email Failed",
+        description: "Failed to send email. Please try again later or contact us directly.",
+        variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
