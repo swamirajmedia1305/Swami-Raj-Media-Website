@@ -126,13 +126,14 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-primary-foreground/10 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row  items-center gap-4">
             <p className="text-primary-foreground/60 text-sm text-center md:text-left">
               © {currentYear} Swamiraj Media. {t("footer.rights")}
             </p>
-            <p className="text-primary-foreground/60 text-sm">
-              Developed by 
-            </p>
+            <a href="https://www.infiinofy.com/" target="_blank">
+            <p className="text-primary-foreground/100 text-sm">
+              Developed by INFIINOFY</p></a>
+            
           </div>
         </div>
       </div>
